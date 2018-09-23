@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<SplitPane dividerPositions="0.5181058495821727" orientation="VERTICAL" prefHeight="720.0" prefWidth="1079.0"
+           xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.MainController">
+    <items>
+        <AnchorPane>
+            <children>
+                <SplitPane dividerPositions="0.8334883720930233" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="373.0"
+                           prefWidth="1077.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="722.0">
+                            <children>
+                                <LineChart fx:id="mainChart" layoutX="-7.0" layoutY="-1.0" prefHeight="367.0"
+                                           prefWidth="892.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <xAxis>
+                                        <NumberAxis side="BOTTOM"/>
+                                    </xAxis>
+                                    <yAxis>
+                                        <NumberAxis side="LEFT"/>
+                                    </yAxis>
+                                </LineChart>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
+                                    minWidth="0.0" prefHeight="451.0" prefWidth="151.0"
+                                    SplitPane.resizableWithParent="false">
+                            <children>
+                                <Button fx:id="dpfButton" layoutX="10.0" layoutY="65.0" mnemonicParsing="false"
+                                        prefHeight="25.0" prefWidth="155.0" text="ДПФ" AnchorPane.leftAnchor="10.0"
+                                        AnchorPane.rightAnchor="10.0"/>
+                                <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false"
+                                        onAction="#openFileChooser" prefHeight="25.0" prefWidth="155.0"
+                                        text="Выбрать файл" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                                        AnchorPane.topAnchor="10.0"/>
+                                <Label fx:id="fileLabel" layoutX="10.0" layoutY="42.0" prefHeight="17.0"
+                                       prefWidth="155.0" text="..." textAlignment="RIGHT" AnchorPane.leftAnchor="10.0"
+                                       AnchorPane.rightAnchor="10.0"/>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </AnchorPane>
+        <SplitPane dividerPositions="0.49510337323177367" prefHeight="217.0" prefWidth="835.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <LineChart fx:id="amplChart" layoutY="-36.0" style="-fx-tick-length: 1;"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <NumberAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <LineChart fx:id="phaseChart" layoutX="-80.0" layoutY="-29.0" AnchorPane.bottomAnchor="0.0"
+                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                            <xAxis>
+                                <NumberAxis side="BOTTOM"/>
+                            </xAxis>
+                            <yAxis>
+                                <NumberAxis side="LEFT"/>
+                            </yAxis>
+                        </LineChart>
+                    </children>
+                </AnchorPane>
+            </items>
+        </SplitPane>
+    </items>
+</SplitPane>
