@@ -13,4 +13,10 @@ public class SignalPack {
 
     private String nameX;
     private String nameY;
+    private double width = 1;
+
+    public SignalPack(String nameX, String nameY) {
+        this.nameX = nameX;
+        this.nameY = nameY;
+    }
 }

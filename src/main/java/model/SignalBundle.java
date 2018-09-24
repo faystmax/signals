@@ -19,7 +19,7 @@ public class SignalBundle {
         aMap.put("velo", new SignalPack("сек", "мВ"));
         aMap.put("spiro", new SignalPack("сек", "л"));
         aMap.put("default", new SignalPack("сек", ""));
-        aMap.put("gz", new SignalPack("Гц", ""));
+        aMap.put("gz", new SignalPack("Гц", "", 0.5));
         myMap = Collections.unmodifiableMap(aMap);
     }
 }

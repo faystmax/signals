@@ -4,7 +4,7 @@ apply plugin: 'idea'
 group 'signals'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = JavaVersion.VERSION_1_10
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.10'

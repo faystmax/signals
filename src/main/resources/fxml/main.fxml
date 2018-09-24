@@ -33,8 +33,8 @@
                                     SplitPane.resizableWithParent="false">
                             <children>
                                 <Button fx:id="dpfButton" layoutX="10.0" layoutY="65.0" mnemonicParsing="false"
-                                        prefHeight="25.0" prefWidth="155.0" text="ДПФ" AnchorPane.leftAnchor="10.0"
-                                        AnchorPane.rightAnchor="10.0"/>
+                                        onAction="#dpf" prefHeight="25.0" prefWidth="155.0" text="ДПФ"
+                                        AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"/>
                                 <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false"
                                         onAction="#openFileChooser" prefHeight="25.0" prefWidth="155.0"
                                         text="Выбрать файл" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
@@ -42,6 +42,8 @@
                                 <Label fx:id="fileLabel" layoutX="10.0" layoutY="42.0" prefHeight="17.0"
                                        prefWidth="155.0" text="..." textAlignment="RIGHT" AnchorPane.leftAnchor="10.0"
                                        AnchorPane.rightAnchor="10.0"/>
+                                <Button fx:id="bpfButton" layoutX="11.0" layoutY="98.0" mnemonicParsing="false"
+                                        onAction="#bpf" prefHeight="25.0" prefWidth="155.0" text="ДПФ"/>
                             </children>
                         </AnchorPane>
                     </items>

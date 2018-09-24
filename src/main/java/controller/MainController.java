@@ -28,6 +28,7 @@ public class MainController {
     @FXML private LineChart amplChart;
     @FXML private LineChart phaseChart;
     @FXML private Button dpfButton;
+    @FXML private Button bpfButton;
     @FXML private Label fileLabel;
 
     @Setter private Stage stage;
@@ -41,7 +42,7 @@ public class MainController {
 
     @FXML
     private void openFileChooser() {
-        var fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Выберите файл с сигналом");
         fileChooser.setInitialDirectory(new File("./signals"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt", "*.txt"));
@@ -53,7 +54,7 @@ public class MainController {
 
     private void loadSignal() {
         if (selectedFile != null) {
-            var signals = LoaderUtil.loadSignals(selectedFile);
+            ArrayList<Complex> signals = LoaderUtil.loadSignals(selectedFile);
             for (String name : SignalBundle.myMap.keySet()) {
                 if (selectedFile.getName().contains(name)) {
                     signal = new Signal(SignalBundle.myMap.get(name), signals);
@@ -68,15 +69,26 @@ public class MainController {
     private void show(Signal signal) {
         clear();
         ChartUtil.setUp(mainChart, "Оригинал", signal, 'r', Signal.FREQUENCY);
-        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData());
-        ChartUtil.setUp(amplChart, "Амплитуда", new Signal(SignalBundle.myMap.get("gz"), dpf), 'm', dpf.size() / Signal.FREQUENCY);
-        ChartUtil.setUp(phaseChart, "Фаза", new Signal(SignalBundle.myMap.get("gz"), dpf), 'p', dpf.size() / Signal.FREQUENCY);
     }
 
     private void clear() {
         mainChart.getData().clear();
         amplChart.getData().clear();
         phaseChart.getData().clear();
+    }
+
+    @FXML
+    private void dpf() {
+        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData());
+        ChartUtil.setUp(amplChart, "Амплитуда", new Signal(SignalBundle.myMap.get("gz"), dpf), 'm', dpf.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "Фаза", new Signal(SignalBundle.myMap.get("gz"), dpf), 'p', dpf.size() / Signal.FREQUENCY);
+    }
+
+    @FXML
+    private void bpf() {
+//        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData());
+//        ChartUtil.setUp(amplChart, "Амплитуда", new Signal(SignalBundle.myMap.get("gz"), dpf), 'm', dpf.size() / Signal.FREQUENCY);
+//        ChartUtil.setUp(phaseChart, "Фаза", new Signal(SignalBundle.myMap.get("gz"), dpf), 'p', dpf.size() / Signal.FREQUENCY);
     }
 
 }

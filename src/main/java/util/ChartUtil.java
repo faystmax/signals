@@ -17,20 +17,19 @@ public class ChartUtil {
         chart.setCreateSymbols(false);
         chart.getXAxis().setLabel(signal.getSignalPack().getNameX());
         chart.getYAxis().setLabel(signal.getSignalPack().getNameY());
-        chart.getData().addAll(getSeries(toDouble(signal.getData(), type), title, multiplier));
+        chart.getData().addAll(getSeries(toDouble(signal.getData(), type), title, multiplier, signal.getSignalPack().getWidth()));
 //        ((NumberAxis)chart.getXAxis()).
 //        chart.getXAxis().setAutoRanging(false);
 //        ((NumberAxis)chart.getXAxis()).setLowerBound(0);
 //        ((NumberAxis)chart.getXAxis()).setUpperBound(2);
     }
 
-    public static LineChart.Series getSeries(ArrayList<Double> signals, String signalsName, double multiplier) {
+    public static LineChart.Series getSeries(ArrayList<Double> signals, String signalsName, double multiplier, double size) {
         LineChart.Series series = new LineChart.Series();
         series.setName(signalsName);
-        int i = 0;
-        for (Double value : signals) {
-            series.getData().add(new LineChart.Data(i / multiplier, value));
-            i++;
+
+        for (int i = 0; i < signals.size() * size; i++) {
+            series.getData().add(new LineChart.Data(i / multiplier, signals.get(i)));
         }
 
         return series;
