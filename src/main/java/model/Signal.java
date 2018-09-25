@@ -3,7 +3,7 @@ package model;
 import lombok.Data;
 import org.apache.commons.math3.complex.Complex;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Amosov Maxim - amosov.m@ext-system.com
@@ -15,12 +15,10 @@ public class Signal {
     public static final double FREQUENCY = 360.0;
 
     private SignalPack signalPack;
-    private ArrayList<Complex> data;
+    private List<Complex> data;
 
-    public Signal(SignalPack signalPack, ArrayList<Complex> data) {
+    public Signal(SignalPack signalPack, List<Complex> data) {
         this.signalPack = signalPack;
         this.data = data;
     }
-
-
 }

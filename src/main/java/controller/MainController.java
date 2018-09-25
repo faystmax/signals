@@ -16,7 +16,10 @@ import util.ChartUtil;
 import util.LoaderUtil;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Amosov Maxim - amosov.m@ext-system.com
@@ -30,6 +33,8 @@ public class MainController {
     @FXML private Button dpfButton;
     @FXML private Button bpfButton;
     @FXML private Label fileLabel;
+    @FXML private Label dpfTimeLabel;
+    @FXML private Label bpfTimeLabel;
 
     @Setter private Stage stage;
     private File selectedFile;
@@ -38,6 +43,8 @@ public class MainController {
     @FXML
     protected void initialize() {
         fileLabel.setAlignment(Pos.CENTER_RIGHT);
+        dpfTimeLabel.setAlignment(Pos.CENTER_RIGHT);
+        bpfTimeLabel.setAlignment(Pos.CENTER_RIGHT);
     }
 
     @FXML
@@ -79,16 +86,31 @@ public class MainController {
 
     @FXML
     private void dpf() {
-        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData());
-        ChartUtil.setUp(amplChart, "Амплитуда", new Signal(SignalBundle.myMap.get("gz"), dpf), 'm', dpf.size() / Signal.FREQUENCY);
-        ChartUtil.setUp(phaseChart, "Фаза", new Signal(SignalBundle.myMap.get("gz"), dpf), 'p', dpf.size() / Signal.FREQUENCY);
+        Instant start = Instant.now();
+        ArrayList<Complex> result = FourierTransformService.DPF(signal.getData());
+        Instant end = Instant.now();
+        dpfTimeLabel.setText(convertSecondsToHMmSs(Duration.between(start, end).toMillis()));
+        ChartUtil.setUp(amplChart, "ДПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "ДПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
     }
 
     @FXML
     private void bpf() {
-//        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData());
-//        ChartUtil.setUp(amplChart, "Амплитуда", new Signal(SignalBundle.myMap.get("gz"), dpf), 'm', dpf.size() / Signal.FREQUENCY);
-//        ChartUtil.setUp(phaseChart, "Фаза", new Signal(SignalBundle.myMap.get("gz"), dpf), 'p', dpf.size() / Signal.FREQUENCY);
+        Instant start = Instant.now();
+        List<Complex> result = FourierTransformService.FFT(signal.getData(), false, false);
+        Instant end = Instant.now();
+        bpfTimeLabel.setText(convertSecondsToHMmSs(Duration.between(start, end).getSeconds()));
+        ChartUtil.setUp(amplChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
+    }
+
+    public static String convertSecondsToHMmSs(long durationInMillis) {
+        long millis = durationInMillis % 1000;
+        long second = (durationInMillis / 1000) % 60;
+        long minute = (durationInMillis / (1000 * 60)) % 60;
+        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+
+        return String.format("%02dч %02dм %02dс %04dмс", hour, minute, second, millis);
     }
 
 }

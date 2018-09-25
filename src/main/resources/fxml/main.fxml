@@ -17,8 +17,9 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="361.0" prefWidth="722.0">
                             <children>
                                 <LineChart fx:id="mainChart" layoutX="-7.0" layoutY="-1.0" prefHeight="367.0"
-                                           prefWidth="892.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                           prefWidth="892.0" title="Оригинал" AnchorPane.bottomAnchor="0.0"
+                                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                           AnchorPane.topAnchor="0.0">
                                     <xAxis>
                                         <NumberAxis side="BOTTOM"/>
                                     </xAxis>
@@ -32,18 +33,24 @@
                                     minWidth="0.0" prefHeight="451.0" prefWidth="151.0"
                                     SplitPane.resizableWithParent="false">
                             <children>
-                                <Button fx:id="dpfButton" layoutX="10.0" layoutY="65.0" mnemonicParsing="false"
-                                        onAction="#dpf" prefHeight="25.0" prefWidth="155.0" text="ДПФ"
-                                        AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"/>
-                                <Button layoutX="10.0" layoutY="14.0" mnemonicParsing="false"
-                                        onAction="#openFileChooser" prefHeight="25.0" prefWidth="155.0"
-                                        text="Выбрать файл" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
-                                        AnchorPane.topAnchor="10.0"/>
-                                <Label fx:id="fileLabel" layoutX="10.0" layoutY="42.0" prefHeight="17.0"
-                                       prefWidth="155.0" text="..." textAlignment="RIGHT" AnchorPane.leftAnchor="10.0"
-                                       AnchorPane.rightAnchor="10.0"/>
-                                <Button fx:id="bpfButton" layoutX="11.0" layoutY="98.0" mnemonicParsing="false"
-                                        onAction="#bpf" prefHeight="25.0" prefWidth="155.0" text="ДПФ"/>
+                                <VBox layoutX="10.0" layoutY="10.0" prefHeight="351.0" prefWidth="155.0" spacing="5.0"
+                                      AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+                                      AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#openFileChooser" prefHeight="25.0"
+                                                prefWidth="155.0" text="Выбрать файл"/>
+                                        <Label fx:id="fileLabel" prefHeight="17.0" prefWidth="155.0" text="..."
+                                               textAlignment="RIGHT"/>
+                                        <Button fx:id="dpfButton" mnemonicParsing="false" onAction="#dpf"
+                                                prefHeight="25.0" prefWidth="155.0" text="ДПФ"/>
+                                        <Label fx:id="dpfTimeLabel" prefHeight="17.0" prefWidth="155.0" text="..."
+                                               textAlignment="RIGHT"/>
+                                        <Button fx:id="bpfButton" mnemonicParsing="false" onAction="#bpf"
+                                                prefHeight="25.0" prefWidth="155.0" text="БПФ"/>
+                                        <Label fx:id="bpfTimeLabel" prefHeight="17.0" prefWidth="155.0" text="..."
+                                               textAlignment="RIGHT"/>
+                                    </children>
+                                </VBox>
                             </children>
                         </AnchorPane>
                     </items>
@@ -54,7 +61,7 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <LineChart fx:id="amplChart" layoutY="-36.0" style="-fx-tick-length: 1;"
+                        <LineChart fx:id="amplChart" layoutY="-36.0" style="-fx-tick-length: 1;" title="Амплитуда"
                                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <xAxis>
@@ -68,8 +75,9 @@
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <LineChart fx:id="phaseChart" layoutX="-80.0" layoutY="-29.0" AnchorPane.bottomAnchor="0.0"
-                                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <LineChart fx:id="phaseChart" layoutX="-80.0" layoutY="-29.0" title="Фаза"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <xAxis>
                                 <NumberAxis side="BOTTOM"/>
                             </xAxis>

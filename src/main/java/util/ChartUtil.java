@@ -5,6 +5,7 @@ import model.Signal;
 import org.apache.commons.math3.complex.Complex;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Amosov Maxim - amosov.m@ext-system.com
@@ -13,30 +14,23 @@ import java.util.ArrayList;
 public class ChartUtil {
 
 
-    public static void setUp(LineChart chart, String title, Signal signal, char type, double multiplier) {
+    public static void setUp(LineChart chart, String seriesName, Signal signal, char type, double multiplier) {
         chart.setCreateSymbols(false);
         chart.getXAxis().setLabel(signal.getSignalPack().getNameX());
         chart.getYAxis().setLabel(signal.getSignalPack().getNameY());
-        chart.getData().addAll(getSeries(toDouble(signal.getData(), type), title, multiplier, signal.getSignalPack().getWidth()));
-//        ((NumberAxis)chart.getXAxis()).
-//        chart.getXAxis().setAutoRanging(false);
-//        ((NumberAxis)chart.getXAxis()).setLowerBound(0);
-//        ((NumberAxis)chart.getXAxis()).setUpperBound(2);
+        chart.getData().addAll(getSeries(toDouble(signal.getData(), type), seriesName, multiplier, signal.getSignalPack().getWidth()));
     }
 
-    public static LineChart.Series getSeries(ArrayList<Double> signals, String signalsName, double multiplier, double size) {
+    public static LineChart.Series getSeries(ArrayList<Double> signals, String seriesName, double multiplier, double size) {
         LineChart.Series series = new LineChart.Series();
-        series.setName(signalsName);
-
+        series.setName(seriesName);
         for (int i = 0; i < signals.size() * size; i++) {
             series.getData().add(new LineChart.Data(i / multiplier, signals.get(i)));
         }
-
         return series;
     }
 
-
-    public static ArrayList<Double> toDouble(ArrayList<Complex> list, char param) {
+    public static ArrayList<Double> toDouble(List<Complex> list, char param) {
         ArrayList<Double> newList = new ArrayList<Double>();
         for (Complex number : list) {
             switch (param) {
