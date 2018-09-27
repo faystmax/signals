@@ -16,8 +16,6 @@ import util.ChartUtil;
 import util.LoaderUtil;
 
 import java.io.File;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +30,11 @@ public class MainController {
     @FXML private LineChart phaseChart;
     @FXML private Button dpfButton;
     @FXML private Button bpfButton;
+    @FXML private Button clearBtn;
     @FXML private Label fileLabel;
     @FXML private Label dpfTimeLabel;
     @FXML private Label bpfTimeLabel;
+    @FXML private Label bpfnTimeLabel;
 
     @Setter private Stage stage;
     private File selectedFile;
@@ -45,6 +45,7 @@ public class MainController {
         fileLabel.setAlignment(Pos.CENTER_RIGHT);
         dpfTimeLabel.setAlignment(Pos.CENTER_RIGHT);
         bpfTimeLabel.setAlignment(Pos.CENTER_RIGHT);
+        clear();
     }
 
     @FXML
@@ -75,42 +76,56 @@ public class MainController {
 
     private void show(Signal signal) {
         clear();
+        mainChart.getData().clear();
         ChartUtil.setUp(mainChart, "Оригинал", signal, 'r', Signal.FREQUENCY);
     }
 
+    @FXML
     private void clear() {
-        mainChart.getData().clear();
         amplChart.getData().clear();
         phaseChart.getData().clear();
+        dpfTimeLabel.setText(String.format("%02dч %02dм %02dс %04dмс", 0, 0, 0, 0));
+        bpfTimeLabel.setText(String.format("%02dч %02dм %02dс %04dмс", 0, 0, 0, 0));
+        bpfnTimeLabel.setText(String.format("%02dч %02dм %02dс %04dмс", 0, 0, 0, 0));
     }
 
     @FXML
     private void dpf() {
-        Instant start = Instant.now();
-        ArrayList<Complex> result = FourierTransformService.DPF(signal.getData());
-        Instant end = Instant.now();
-        dpfTimeLabel.setText(convertSecondsToHMmSs(Duration.between(start, end).toMillis()));
+        long startTime = System.currentTimeMillis();
+        ArrayList<Complex> result = FourierTransformService.DPF(signal.getData(), false);
+        long totalTime = System.currentTimeMillis() - startTime;
+        dpfTimeLabel.setText(convertSecondsToHMmSs(totalTime));
         ChartUtil.setUp(amplChart, "ДПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
         ChartUtil.setUp(phaseChart, "ДПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
     }
 
     @FXML
     private void bpf() {
-        Instant start = Instant.now();
-        List<Complex> result = FourierTransformService.FFT(signal.getData(), false, false);
-        Instant end = Instant.now();
-        bpfTimeLabel.setText(convertSecondsToHMmSs(Duration.between(start, end).getSeconds()));
+        long startTime = System.currentTimeMillis();
+        List<Complex> result = FourierTransformService.BFT(signal.getData());
+        long totalTime = System.currentTimeMillis() - startTime;
+        bpfTimeLabel.setText(convertSecondsToHMmSs(totalTime));
         ChartUtil.setUp(amplChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
         ChartUtil.setUp(phaseChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
     }
 
-    public static String convertSecondsToHMmSs(long durationInMillis) {
-        long millis = durationInMillis % 1000;
-        long second = (durationInMillis / 1000) % 60;
-        long minute = (durationInMillis / (1000 * 60)) % 60;
-        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+    @FXML
+    private void bpfn() {
+        long startTime = System.currentTimeMillis();
+        List<Complex> result = FourierTransformService.BPFn(signal.getData());
+        long totalTime = System.currentTimeMillis() - startTime;
+        bpfnTimeLabel.setText(convertSecondsToHMmSs(totalTime));
+        ChartUtil.setUp(amplChart, "БПФn", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "БПФn", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
+    }
 
-        return String.format("%02dч %02dм %02dс %04dмс", hour, minute, second, millis);
+
+    public static String convertSecondsToHMmSs(long mills) {
+        long second = (mills / 1000) % 60;
+        long minute = (mills / (1000 * 60)) % 60;
+        long hour = (mills / (1000 * 60 * 60)) % 24;
+
+        return String.format("%02dч %02dм %02dс %04dмс", hour, minute, second, mills);
     }
 
 }
