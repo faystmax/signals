@@ -21,7 +21,7 @@ public class ChartUtil {
         chart.getData().addAll(getSeries(toDouble(signal.getData(), type), seriesName, multiplier, signal.getSignalPack().getWidth()));
     }
 
-    public static LineChart.Series getSeries(ArrayList<Double> signals, String seriesName, double multiplier, double size) {
+    private static LineChart.Series getSeries(ArrayList<Double> signals, String seriesName, double multiplier, double size) {
         LineChart.Series series = new LineChart.Series();
         series.setName(seriesName);
         for (int i = 0; i < signals.size() * size; i++) {
@@ -30,7 +30,7 @@ public class ChartUtil {
         return series;
     }
 
-    public static ArrayList<Double> toDouble(List<Complex> list, char param) {
+    private static ArrayList<Double> toDouble(List<Complex> list, char param) {
         ArrayList<Double> newList = new ArrayList<Double>();
         for (Complex number : list) {
             switch (param) {

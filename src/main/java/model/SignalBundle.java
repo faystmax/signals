@@ -20,6 +20,7 @@ public class SignalBundle {
         aMap.put("spiro", new SignalPack("сек", "л"));
         aMap.put("default", new SignalPack("сек", ""));
         aMap.put("gz", new SignalPack("Гц", "", 0.5));
+        aMap.put("gzFull", new SignalPack("ceк", "", 1));
         myMap = Collections.unmodifiableMap(aMap);
     }
 }

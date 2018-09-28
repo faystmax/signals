@@ -26,7 +26,7 @@ public class FourierTransformService {
                 temp = temp.multiply(x.get(i));
                 ck = ck.add(temp);
             }
-            c.add(ck.divide(N));
+            c.add(ck.divide((inverse ? 1 : N)));
         }
         return c;
     }
@@ -182,4 +182,6 @@ public class FourierTransformService {
     public static Complex polar(double r, double theta) {
         return new Complex(r * Math.cos(theta), r * Math.sin(theta));
     }
+
+
 }

@@ -5,12 +5,15 @@ import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Setter;
 import model.Signal;
 import model.SignalBundle;
 import org.apache.commons.math3.complex.Complex;
+import service.AproxService;
+import service.FilterService;
 import service.FourierTransformService;
 import util.ChartUtil;
 import util.LoaderUtil;
@@ -25,6 +28,10 @@ import java.util.List;
  */
 public class MainController {
 
+    @FXML private RadioButton lowRadioBtn;
+    @FXML private RadioButton highRadioBen;
+    @FXML private RadioButton rejectRadioBtn;
+    @FXML private RadioButton stripeRadioBtn;
     @FXML private LineChart mainChart;
     @FXML private LineChart amplChart;
     @FXML private LineChart phaseChart;
@@ -43,8 +50,6 @@ public class MainController {
     @FXML
     protected void initialize() {
         fileLabel.setAlignment(Pos.CENTER_RIGHT);
-        dpfTimeLabel.setAlignment(Pos.CENTER_RIGHT);
-        bpfTimeLabel.setAlignment(Pos.CENTER_RIGHT);
         clear();
     }
 
@@ -120,7 +125,7 @@ public class MainController {
     }
 
 
-    public static String convertSecondsToHMmSs(long mills) {
+    private static String convertSecondsToHMmSs(long mills) {
         long second = (mills / 1000) % 60;
         long minute = (mills / (1000 * 60)) % 60;
         long hour = (mills / (1000 * 60 * 60)) % 24;
@@ -128,4 +133,36 @@ public class MainController {
         return String.format("%02dч %02dм %02dс %04dмс", hour, minute, second, mills);
     }
 
+    @FXML
+    private void aprox() {
+        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData(), false);
+        ArrayList<Complex> aprox5 = FourierTransformService.DPF(AproxService.cut(dpf, 5), true);
+        ArrayList<Complex> aprox30 = FourierTransformService.DPF(AproxService.cut(dpf, 30), true);
+
+        ChartUtil.setUp(amplChart, "5 гармоник", new Signal(SignalBundle.myMap.get("gzFull"), aprox5), 'r', aprox5.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "30 гармоник", new Signal(SignalBundle.myMap.get("gzFull"), aprox30), 'r', aprox30.size() / Signal.FREQUENCY);
+
+    }
+
+    @FXML
+    private void filter() {
+        ArrayList<Complex> dpf = FourierTransformService.DPF(signal.getData(), false);
+        String filterName = "";
+        if (lowRadioBtn.isSelected()) {
+            dpf = FilterService.low(dpf);
+            filterName = "low";
+        } else if (highRadioBen.isSelected()) {
+            dpf = FilterService.high(dpf);
+            filterName = "high";
+        } else if (rejectRadioBtn.isSelected()) {
+            dpf = FilterService.reject(dpf);
+            filterName = "reject";
+        } else if (stripeRadioBtn.isSelected()) {
+            dpf = FilterService.stripe(dpf);
+            filterName = "stripe";
+        }
+
+        ArrayList<Complex> filter = FourierTransformService.DPF(dpf, true);
+        ChartUtil.setUp(amplChart, filterName, new Signal(SignalBundle.myMap.get("gzFull"), filter), 'r', Signal.FREQUENCY);
+    }
 }
