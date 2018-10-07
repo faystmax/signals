@@ -32,7 +32,7 @@
                             </children>
                         </AnchorPane>
                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0"
-                                    minWidth="-Infinity" prefHeight="451.0" prefWidth="180.0"
+                                    minWidth="-Infinity" prefHeight="451.0" prefWidth="200.0"
                                     SplitPane.resizableWithParent="false">
                             <children>
                                 <VBox layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
@@ -92,6 +92,14 @@
                                         <Button fx:id="filterButton" maxWidth="1.7976931348623157E308"
                                                 mnemonicParsing="false" onAction="#filter" prefHeight="25.0"
                                                 prefWidth="155.0" text="Фильтр"/>
+                                        <Label fx:id="descLabel" alignment="BOTTOM_CENTER"
+                                               maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                               prefHeight="17.0" prefWidth="142.0" textAlignment="CENTER"
+                                               VBox.vgrow="ALWAYS">
+                                            <VBox.margin>
+                                                <Insets/>
+                                            </VBox.margin>
+                                        </Label>
                                     </children>
                                 </VBox>
                             </children>

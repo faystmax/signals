@@ -11,6 +11,7 @@ import lombok.Setter;
 import model.Signal;
 import model.SignalBundle;
 import org.apache.commons.math3.complex.Complex;
+import org.apache.commons.math3.util.Pair;
 import service.AproxService;
 import service.FilterService;
 import service.FourierTransformService;
@@ -31,10 +32,11 @@ public class MainController {
     @FXML private RadioButton highRadioBen;
     @FXML private RadioButton rejectRadioBtn;
     @FXML private RadioButton stripeRadioBtn;
-    @FXML private LineChart mainChart;
-    @FXML private LineChart amplChart;
-    @FXML private LineChart phaseChart;
+    @FXML private LineChart<Double, Double> mainChart;
+    @FXML private LineChart<Double, Double> amplChart;
+    @FXML private LineChart<Double, Double> phaseChart;
     @FXML private Label fileLabel;
+    @FXML private Label descLabel;
     @FXML private Label dpfTimeLabel;
     @FXML private Label bpfTimeLabel;
     @FXML private Label bpfnTimeLabel;
@@ -83,6 +85,7 @@ public class MainController {
 
     @FXML
     private void clear() {
+        descLabel.setText("");
         amplChart.getData().clear();
         phaseChart.getData().clear();
         dpfTimeLabel.setText(String.format("%02dч %02dм %02dс %04dмс", 0, 0, 0, 0));
@@ -95,6 +98,7 @@ public class MainController {
         long startTime = System.currentTimeMillis();
         ArrayList<Complex> result = FourierTransformService.DPF(signal.getData(), false);
         long totalTime = System.currentTimeMillis() - startTime;
+        descLabel.setText("Size = " + result.size());
         dpfTimeLabel.setText(convertSecondsToHMmSs(totalTime));
         ChartUtil.setUp(amplChart, "ДПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
         ChartUtil.setUp(phaseChart, "ДПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
@@ -103,21 +107,23 @@ public class MainController {
     @FXML
     private void bpf() {
         long startTime = System.currentTimeMillis();
-        List<Complex> result = FourierTransformService.BFT(signal.getData());
+        Pair<List<Complex>, String> pair = FourierTransformService.BPF(signal.getData());
         long totalTime = System.currentTimeMillis() - startTime;
+        descLabel.setText(pair.getSecond());
         bpfTimeLabel.setText(convertSecondsToHMmSs(totalTime));
-        ChartUtil.setUp(amplChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
-        ChartUtil.setUp(phaseChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(amplChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), pair.getFirst()), 'm', pair.getFirst().size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "БПФ", new Signal(SignalBundle.myMap.get("gz"), pair.getFirst()), 'p', pair.getFirst().size() / Signal.FREQUENCY);
     }
 
     @FXML
     private void bpfn() {
         long startTime = System.currentTimeMillis();
-        List<Complex> result = FourierTransformService.BPFn(signal.getData());
+        Pair<List<Complex>, String> pair = FourierTransformService.BPFn(signal.getData());
         long totalTime = System.currentTimeMillis() - startTime;
+        descLabel.setText(pair.getSecond());
         bpfnTimeLabel.setText(convertSecondsToHMmSs(totalTime));
-        ChartUtil.setUp(amplChart, "БПФn", new Signal(SignalBundle.myMap.get("gz"), result), 'm', result.size() / Signal.FREQUENCY);
-        ChartUtil.setUp(phaseChart, "БПФn", new Signal(SignalBundle.myMap.get("gz"), result), 'p', result.size() / Signal.FREQUENCY);
+        ChartUtil.setUp(amplChart, "БПФn", new Signal(SignalBundle.myMap.get("gz"), pair.getFirst()), 'm', pair.getFirst().size() / Signal.FREQUENCY);
+        ChartUtil.setUp(phaseChart, "БПФn", new Signal(SignalBundle.myMap.get("gz"), pair.getFirst()), 'p', pair.getFirst().size() / Signal.FREQUENCY);
     }
 
 

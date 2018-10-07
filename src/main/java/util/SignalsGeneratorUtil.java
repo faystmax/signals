@@ -81,7 +81,6 @@ public class SignalsGeneratorUtil {
                 pw.write(0 + "");
                 pw.println();
             }
-
         }
         pw.close();
     }

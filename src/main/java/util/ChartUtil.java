@@ -14,7 +14,7 @@ import java.util.List;
 public class ChartUtil {
 
 
-    public static void setUp(LineChart chart, String seriesName, Signal signal, char type, double multiplier) {
+    public static void setUp(LineChart<Double, Double> chart, String seriesName, Signal signal, char type, double multiplier) {
         chart.setCreateSymbols(false);
         chart.getXAxis().setLabel(signal.getSignalPack().getNameX());
         chart.getYAxis().setLabel(signal.getSignalPack().getNameY());
@@ -22,10 +22,10 @@ public class ChartUtil {
     }
 
     private static LineChart.Series getSeries(ArrayList<Double> signals, String seriesName, double multiplier, double size) {
-        LineChart.Series series = new LineChart.Series();
+        LineChart.Series<Double, Double> series = new LineChart.Series<>();
         series.setName(seriesName);
         for (int i = 0; i < signals.size() * size; i++) {
-            series.getData().add(new LineChart.Data(i / multiplier, signals.get(i)));
+            series.getData().add(new LineChart.Data<>(i / multiplier, signals.get(i)));
         }
         return series;
     }

@@ -30,11 +30,12 @@ public class FourierTransformService {
         return c;
     }
 
-    public static List<Complex> BFT(List<Complex> f) {
+    public static Pair<List<Complex>, String> BPF(List<Complex> f) {
 
 
         int P = (int) (Math.log(f.size()) / Math.log(2));
         int N = (int) Math.pow(2, P);
+
 
         List<Complex> fNew = f.subList(0, N);
 
@@ -69,13 +70,12 @@ public class FourierTransformService {
             }
         }
 
-        return fNew;
+        return new Pair<>(fNew, "Size = " + f.size() + "; 2^" + P + "= " + N);
     }
 
-    public static List<Complex> BPFn(List<Complex> f) {
+    public static Pair<List<Complex>, String> BPFn(List<Complex> f) {
 
-        ArrayList<Complex> fNew = new ArrayList<>();
-        fNew.addAll(f);
+        ArrayList<Complex> fNew = new ArrayList<>(f);
 
         int P = getPowerOfTwo(f.size());
 
@@ -85,11 +85,9 @@ public class FourierTransformService {
         int L = (int) lm.getFirst();
         int N = L * M;
 
-        System.out.println("Size = " + f.size() + "; (2^P = L) * M = " + "(2^" + P + " = " + L + ") * " + M + " = " + M * L);
-
         for (int i = 0; i < M; i++) {
             List<Complex> bpfnStep = getEveryL(fNew, L, M, i);
-            fNew = returnEveryL(fNew, BFT(bpfnStep), L, M, i);
+            fNew = returnEveryL(fNew, BPF(bpfnStep).getFirst(), L, M, i);
         }
 
         ArrayList<Complex> bpfn = new ArrayList<>();
@@ -114,7 +112,7 @@ public class FourierTransformService {
             bpfn.set(i, bpfn.get(i).divide(N));
         }
 
-        return bpfn;
+        return new Pair<>(bpfn, "Size = " + f.size() + "; (2^" + P + " = " + L + ") * " + M + " = " + M * L);
     }
 
     private static Pair getLandM(int P, int size) {
@@ -151,8 +149,7 @@ public class FourierTransformService {
     }
 
     private static ArrayList<Complex> returnEveryL(List<Complex> f, List<Complex> returnF, int L, int M, int start) {
-        ArrayList<Complex> fNew = new ArrayList<>();
-        fNew.addAll(f);
+        ArrayList<Complex> fNew = new ArrayList<>(f);
 
         for (int i = 0; i < L; i++) {
             fNew.set(i * M + start, returnF.get(i));
