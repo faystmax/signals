@@ -1,6 +1,5 @@
 package service;
 
-import old.Helper;
 import org.apache.commons.math3.complex.Complex;
 import org.apache.commons.math3.util.Pair;
 
@@ -78,7 +77,7 @@ public class FourierTransformService {
         ArrayList<Complex> fNew = new ArrayList<>();
         fNew.addAll(f);
 
-        int P = Helper.getPowerOfTwo(f.size());
+        int P = getPowerOfTwo(f.size());
 
         Pair lm = getLandM(P, f.size());
 
@@ -179,9 +178,16 @@ public class FourierTransformService {
     /**
      * Returns the complex number (r*cos(theta)) + i*(r*sin(theta)).
      */
-    public static Complex polar(double r, double theta) {
+    private static Complex polar(double r, double theta) {
         return new Complex(r * Math.cos(theta), r * Math.sin(theta));
     }
 
+    private static int getPowerOfTwo(int number) {
+        int n = 1;
+        while (Math.pow(2, n) <= number) {
+            n++;
+        }
+        return n - 1;
+    }
 
 }

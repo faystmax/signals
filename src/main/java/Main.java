@@ -26,6 +26,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("icons/icon.png")));
         primaryStage.setTitle("1 Лабораторная работа");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 
