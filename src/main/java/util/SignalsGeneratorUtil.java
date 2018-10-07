@@ -13,9 +13,9 @@ import java.io.PrintWriter;
 @Slf4j
 public class SignalsGeneratorUtil {
 
-    private static final String SAW = "signals/Пила.txt";
-    private static final String ANGLE = "signals/Треугольный.txt";
-    private static final String RECTANGLE = "signals/Прямоугольный.txt";
+    private static final String SAW = "data/Пила.txt";
+    private static final String ANGLE = "data/Треугольный.txt";
+    private static final String RECTANGLE = "data/Прямоугольный.txt";
 
     private static final double maxY = 255;
     private static final double maxX = 2;

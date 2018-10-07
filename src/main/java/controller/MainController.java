@@ -3,7 +3,6 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.stage.FileChooser;
@@ -35,9 +34,6 @@ public class MainController {
     @FXML private LineChart mainChart;
     @FXML private LineChart amplChart;
     @FXML private LineChart phaseChart;
-    @FXML private Button dpfButton;
-    @FXML private Button bpfButton;
-    @FXML private Button clearBtn;
     @FXML private Label fileLabel;
     @FXML private Label dpfTimeLabel;
     @FXML private Label bpfTimeLabel;
@@ -57,7 +53,7 @@ public class MainController {
     private void openFileChooser() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Выберите файл с сигналом");
-        fileChooser.setInitialDirectory(new File("./signals"));
+        fileChooser.setInitialDirectory(new File("./data"));
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("txt", "*.txt"));
         selectedFile = fileChooser.showOpenDialog(stage);
         fileLabel.setText(selectedFile == null ? "..." : selectedFile.getName());
