@@ -4,7 +4,7 @@
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<SplitPane dividerPositions="0.5657370517928287" orientation="VERTICAL" prefHeight="755.0" prefWidth="1079.0"
+<SplitPane dividerPositions="0.5843293492695883" orientation="VERTICAL" prefHeight="755.0" prefWidth="1079.0"
            xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="controller.MainController">
     <items>
@@ -75,7 +75,7 @@
                                                 mnemonicParsing="false" onAction="#aprox" prefHeight="25.0"
                                                 prefWidth="155.0" text="Апроксимация"/>
                                         <RadioButton fx:id="lowRadioBtn" maxWidth="1.7976931348623157E308"
-                                                     mnemonicParsing="false" selected="true" text="ФНЧ">
+                                                     mnemonicParsing="false" selected="true" text="ФНЧ - 30">
                                             <VBox.margin>
                                                 <Insets top="10.0"/>
                                             </VBox.margin>
@@ -84,22 +84,28 @@
                                             </toggleGroup>
                                         </RadioButton>
                                         <RadioButton fx:id="highRadioBen" maxWidth="1.7976931348623157E308"
-                                                     mnemonicParsing="false" text="ФВЧ" toggleGroup="$filter"/>
+                                                     mnemonicParsing="false" text="ФВЧ - 24" toggleGroup="$filter"/>
                                         <RadioButton fx:id="stripeRadioBtn" maxWidth="1.7976931348623157E308"
-                                                     mnemonicParsing="false" text="Полосовой" toggleGroup="$filter"/>
+                                                     mnemonicParsing="false" text="Полосовой - 49 -50"
+                                                     toggleGroup="$filter"/>
                                         <RadioButton fx:id="rejectRadioBtn" maxWidth="1.7976931348623157E308"
-                                                     mnemonicParsing="false" text="Режекторный" toggleGroup="$filter"/>
+                                                     mnemonicParsing="false" text="Режекторный - 49-51"
+                                                     toggleGroup="$filter"/>
                                         <Button fx:id="filterButton" maxWidth="1.7976931348623157E308"
                                                 mnemonicParsing="false" onAction="#filter" prefHeight="25.0"
                                                 prefWidth="155.0" text="Фильтр"/>
-                                        <Label fx:id="descLabel" alignment="BOTTOM_CENTER"
+                                        <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+                                        <Label fx:id="descBpfLabel" alignment="BOTTOM_CENTER"
                                                maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                               prefHeight="17.0" prefWidth="142.0" textAlignment="CENTER"
-                                               VBox.vgrow="ALWAYS">
+                                               prefHeight="17.0" prefWidth="142.0" textAlignment="CENTER">
                                             <VBox.margin>
                                                 <Insets/>
                                             </VBox.margin>
                                         </Label>
+                                        <Label fx:id="descBpfnLabel" alignment="BOTTOM_CENTER" layoutX="10.0"
+                                               layoutY="376.0" maxHeight="1.7976931348623157E308"
+                                               maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="142.0"
+                                               textAlignment="CENTER"/>
                                     </children>
                                 </VBox>
                             </children>
