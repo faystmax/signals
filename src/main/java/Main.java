@@ -1,37 +1,27 @@
-import controller.MainController;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
+import lab1.App1Lab;
+import lab2.App2Lab;
 import lombok.extern.slf4j.Slf4j;
-import util.SignalsGeneratorUtil;
 
-import java.util.Objects;
+import java.util.Arrays;
 
 /**
  * @author Amosov Maxim - amosov.m@ext-system.com
  * @since 23.09.2018
  */
 @Slf4j
-public class Main extends Application {
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        SignalsGeneratorUtil.generate();
-        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getClassLoader().getResource("fxml/main.fxml")));
-        Parent root = loader.load();
-        ((MainController) loader.getController()).setStage(primaryStage);
-        primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("icons/icon.png")));
-        primaryStage.setTitle("1 Лабораторная работа");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-    }
-
+public class Main {
 
     public static void main(String[] args) {
-        launch(args);
+        if (args.length == 0) {
+            log.error("No argument! Pls specify what lab u want to start! (lab1,lab2... etc)");
+            return;
+        }
+        String lab = args[0];
+        args = Arrays.copyOfRange(args, 1, args.length);
+        if ("lab1".equals(lab)) {
+            new App1Lab().show(args);
+        } else if ("lab2".equals(lab)) {
+            new App2Lab().show(args);
+        }
     }
 }
