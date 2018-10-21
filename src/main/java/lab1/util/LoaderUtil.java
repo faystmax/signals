@@ -31,4 +31,20 @@ public class LoaderUtil {
         }
         return signals;
     }
+
+    public static ArrayList<Double> loadSignalsSimple(File file) {
+        ArrayList<Double> signals = new ArrayList<>();
+        try (BufferedReader fin = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = fin.readLine()) != null) {
+                String[] split = StringUtils.split(line, " ");
+                for (String s : split) {
+                    signals.add(Double.parseDouble(s));
+                }
+            }
+        } catch (Throwable th) {
+            log.error("Не удалось загрузить сигналы из файла " + file.getName(), th);
+        }
+        return signals;
+    }
 }

@@ -21,4 +21,15 @@ public class AproxService {
         }
         return res;
     }
+
+    public static ArrayList<Double> cutD(List<Double> signal, int garmonicCount) {
+        ArrayList<Double> res = new ArrayList<>();
+        for (int i = 0; i < signal.size(); i++) {
+            res.add(0.);
+            if (i < garmonicCount || i > signal.size() - 1 - garmonicCount) {
+                res.set(i, signal.get(i));
+            }
+        }
+        return res;
+    }
 }

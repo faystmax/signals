@@ -1,5 +1,6 @@
 import lab1.App1Lab;
 import lab2.App2Lab;
+import lab3.App3Lab;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
@@ -22,6 +23,8 @@ public class Main {
             new App1Lab().show(args);
         } else if ("lab2".equals(lab)) {
             new App2Lab().show(args);
+        } else if ("lab3".equals(lab)) {
+            new App3Lab().show(args);
         }
     }
 }
