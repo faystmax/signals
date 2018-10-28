@@ -1,14 +1,14 @@
-package old;
+package lab3.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UolshAdamarHelper {
+public class UolshAdamarService {
 
     public static ArrayList<Double> getUolshTransform(List<Double> signal, boolean invers) {
         ArrayList<Double> uolsh = new ArrayList<>();
 
-        int P = Helper.getPowerOfTwo(signal.size());
+        int P = getPowerOfTwo(signal.size());
         double N = Math.pow(2, P);
 
         System.out.println("2^" + P + "= " + N + "; size = " + signal.size());
@@ -34,7 +34,7 @@ public class UolshAdamarHelper {
     public static ArrayList<Double> getAdamarTransform(List<Double> signal, boolean invers) {
         ArrayList<Double> adamar = new ArrayList<>();
 
-        int P = Helper.getPowerOfTwo(signal.size());
+        int P = getPowerOfTwo(signal.size());
         double N = Math.pow(2, P);
 
         System.out.println("2^" + P + "= " + N + "; size = " + signal.size());
@@ -168,6 +168,14 @@ public class UolshAdamarHelper {
             bin ^= gray;
         }
         return bin;
+    }
+
+    public static int getPowerOfTwo(int number) {
+        int n = 1;
+        while (Math.pow(2, n) <= number) {
+            n++;
+        }
+        return n - 1;
     }
 
 }

@@ -12,9 +12,9 @@ import lab1.service.AproxService;
 import lab1.util.LoaderUtil;
 import lab3.model.SignalSimple;
 import lab3.service.FilterService;
+import lab3.service.UolshAdamarService;
 import lab3.util.ChartUtil;
 import lombok.extern.slf4j.Slf4j;
-import old.UolshAdamarHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -87,8 +87,8 @@ public class Lab3Controller extends BaseController {
 
         String name = uolshRadio.isSelected() ? "Уолш" : "Адамар";
         ArrayList<Double> res = uolshRadio.isSelected() ?
-                UolshAdamarHelper.getUolshTransform(signal.getData(), false) :
-                UolshAdamarHelper.getAdamarTransform(signal.getData(), false);
+                UolshAdamarService.getUolshTransform(signal.getData(), false) :
+                UolshAdamarService.getAdamarTransform(signal.getData(), false);
 
 
         List<Double> inverse;
@@ -106,11 +106,11 @@ public class Lab3Controller extends BaseController {
             inverse = AproxService.cutD(res, Integer.parseInt(garmTextBox.getText()));
         }
         inverse = uolshRadio.isSelected() ?
-                UolshAdamarHelper.getUolshTransform(inverse, true) :
-                UolshAdamarHelper.getAdamarTransform(inverse, true);
+                UolshAdamarService.getUolshTransform(inverse, true) :
+                UolshAdamarService.getAdamarTransform(inverse, true);
 
-        ChartUtil.setUp(amplChart, name, new SignalSimple(SignalBundle.myMap.get("gz"), UolshAdamarHelper.getAmplitude(res)), 1);
-        ChartUtil.setUp(phaseChart, name, new SignalSimple(SignalBundle.myMap.get("gz"), UolshAdamarHelper.getPhase(res)), 1);
+        ChartUtil.setUp(amplChart, name, new SignalSimple(SignalBundle.myMap.get("gz"), UolshAdamarService.getAmplitude(res)), 1);
+        ChartUtil.setUp(phaseChart, name, new SignalSimple(SignalBundle.myMap.get("gz"), UolshAdamarService.getPhase(res)), 1);
         ChartUtil.setUp(inverseChart, name + "_" + garmTextBox.getText(), new SignalSimple(SignalBundle.myMap.get("default"), inverse), FREQ);
     }
 
