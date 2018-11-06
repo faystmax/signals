@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<SplitPane dividerPositions="0.7879069767441861" prefHeight="688.0" prefWidth="1067.0"
+           xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="lab4.controller.Lab4Controller">
+    <items>
+        <VBox>
+            <children>
+                <LineChart fx:id="mainChart" animated="false" createSymbols="false" title="Оригинал">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </LineChart>
+                <LineChart fx:id="transformChart" animated="false" style="-fx-tick-length: 1;" title="Transform">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </LineChart>
+                <LineChart fx:id="resultChart" animated="false" title="Восстановленный">
+                    <xAxis>
+                        <NumberAxis side="BOTTOM"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis side="LEFT"/>
+                    </yAxis>
+                </LineChart>
+            </children>
+        </VBox>
+        <VBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="193.0"
+              spacing="5.0">
+            <children>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="5.0">
+                    <children>
+                        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#openFileChooser"
+                                prefHeight="25.0" prefWidth="139.0" text="Выбрать файл" HBox.hgrow="ALWAYS"/>
+                        <Button mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="44.0" text="Cl"/>
+                    </children>
+                </HBox>
+                <Label fx:id="fileLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="17.0"
+                       prefWidth="155.0" text="..." textAlignment="RIGHT"/>
+                <RadioButton fx:id="harraRadio" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                             selected="true" text="Вейвлет Харра">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="type"/>
+                    </toggleGroup>
+                </RadioButton>
+                <RadioButton fx:id="dobeshRadio" layoutX="15.0" layoutY="97.0" maxWidth="1.7976931348623157E308"
+                             mnemonicParsing="false" text="Вейвлет Добеши d4" toggleGroup="$type"/>
+                <HBox spacing="10.0">
+                    <children>
+                        <TextField fx:id="minTextBox" promptText="min" text="64" HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="maxTextBox" layoutX="10.0" layoutY="10.0" promptText="max" text="2048"/>
+                    </children>
+                </HBox>
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#show" prefHeight="25.0"
+                        prefWidth="155.0" text="Показать"/>
+            </children>
+            <padding>
+                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+            </padding>
+        </VBox>
+    </items>
+</SplitPane>

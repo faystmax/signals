@@ -3,6 +3,7 @@ package lab2.wav;
 import lab1.model.Signal;
 import lab1.model.SignalBundle;
 import lab2.controller.Lab2Controller;
+import lab3.model.SignalSimple;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.complex.Complex;
 
@@ -34,6 +35,29 @@ public class WavUtil {
             }
             while (framesRead != 0);
             return new Signal(SignalBundle.myMap.get("gzFull"), signals);
+        } catch (Exception e) {
+            log.error("Error while loading wav File!", e);
+        }
+        return null;
+    }
+
+    public static SignalSimple loadD(File selectedFile) {
+        try {
+            WavFile wavFile = WavFile.openWavFile(selectedFile);
+            wavFile.display();
+
+            ArrayList<Double> signals = new ArrayList<>(1000);
+            double[] buffer = new double[1000];
+            int framesRead;
+
+            do {
+                framesRead = wavFile.readFrames(buffer, 1000);
+                for (int i = 0; i < framesRead; i++) {
+                    signals.add(buffer[i]);
+                }
+            }
+            while (framesRead != 0);
+            return new SignalSimple(SignalBundle.myMap.get("gzFull"), signals);
         } catch (Exception e) {
             log.error("Error while loading wav File!", e);
         }

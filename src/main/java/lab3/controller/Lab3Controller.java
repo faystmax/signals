@@ -28,6 +28,10 @@ import java.util.List;
 public class Lab3Controller extends BaseController {
 
     private static final double FREQ = 360;
+    public LineChart transformChart;
+    public LineChart resultChart;
+    public RadioButton harraRadio;
+    public RadioButton dobeshRadio;
 
     @FXML private Label fileLabel;
     @FXML private TextField garmTextBox;
