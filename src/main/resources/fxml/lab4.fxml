@@ -56,10 +56,29 @@
                 </RadioButton>
                 <RadioButton fx:id="dobeshRadio" layoutX="15.0" layoutY="97.0" maxWidth="1.7976931348623157E308"
                              mnemonicParsing="false" text="Вейвлет Добеши d4" toggleGroup="$type"/>
+                <HBox>
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" prefHeight="25.0" prefWidth="41.0" text="Scale"
+                               textAlignment="CENTER"/>
+                        <TextField fx:id="scaleTextBox" text="0"/>
+                    </children>
+                </HBox>
                 <HBox spacing="10.0">
                     <children>
-                        <TextField fx:id="minTextBox" promptText="min" text="64" HBox.hgrow="ALWAYS"/>
-                        <TextField fx:id="maxTextBox" layoutX="10.0" layoutY="10.0" promptText="max" text="2048"/>
+                        <CheckBox fx:id="filterCheckbox" maxHeight="1.7976931348623157E308" mnemonicParsing="false"
+                                  prefHeight="25.0" prefWidth="88.0" text="Filter"/>
+                        <TextField fx:id="minTextBox" prefHeight="25.0" prefWidth="90.0" promptText="min" text="64"
+                                   HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="maxTextBox" layoutX="10.0" layoutY="10.0" prefHeight="25.0" prefWidth="90.0"
+                                   promptText="max" text="2048"/>
+                    </children>
+                </HBox>
+                <HBox spacing="20.0">
+                    <children>
+                        <CheckBox fx:id="lowCheckbox" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                  text="low" HBox.hgrow="ALWAYS"/>
+                        <CheckBox fx:id="highCheckbox" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308"
+                                  mnemonicParsing="false" text="hight" HBox.hgrow="ALWAYS"/>
                     </children>
                 </HBox>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#show" prefHeight="25.0"

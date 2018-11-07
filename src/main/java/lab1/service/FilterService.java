@@ -17,6 +17,13 @@ public class FilterService {
         }
     }
 
+    public static void lowD(List<Double> signal, int freq, int val) {
+        val = calcVal(signal.size(), freq, val);
+        for (int i = val; i < signal.size() - val; i++) {
+            signal.set(i, (double) 0);
+        }
+    }
+
     public static void high(List<Complex> signal, int freq, int val) {
         val = calcVal(signal.size(), freq, val);
         for (int i = 0; i < val; i++) {
@@ -24,6 +31,16 @@ public class FilterService {
         }
         for (int i = signal.size() - val; i < signal.size(); i++) {
             signal.set(i, new Complex(0));
+        }
+    }
+
+    public static void highD(List<Double> signal, int freq, int val) {
+        val = calcVal(signal.size(), freq, val);
+        for (int i = 0; i < val; i++) {
+            signal.set(i, 0.);
+        }
+        for (int i = signal.size() - val; i < signal.size(); i++) {
+            signal.set(i, 0.);
         }
     }
 

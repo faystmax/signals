@@ -3,11 +3,13 @@ package lab4.controller;
 import common.BaseController;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import lab1.model.SignalBundle;
+import lab1.service.FilterService;
 import lab1.util.LoaderUtil;
 import lab2.wav.WavUtil;
 import lab3.model.SignalSimple;
@@ -32,8 +34,12 @@ public class Lab4Controller extends BaseController {
     @FXML private Label fileLabel;
     @FXML private TextField maxTextBox;
     @FXML private TextField minTextBox;
+    @FXML private TextField scaleTextBox;
     @FXML private RadioButton harraRadio;
     @FXML private RadioButton dobeshRadio;
+    @FXML private CheckBox filterCheckbox;
+    @FXML private CheckBox lowCheckbox;
+    @FXML private CheckBox highCheckbox;
     @FXML private LineChart<Double, Double> mainChart;
     @FXML private LineChart<Double, Double> transformChart;
     @FXML private LineChart<Double, Double> resultChart;
@@ -88,16 +94,27 @@ public class Lab4Controller extends BaseController {
     private void show() {
 
         String name = harraRadio.isSelected() ? "Хаара" : "Добеши d4";
+        int scale = Integer.parseInt(scaleTextBox.getText());
         List<Double> transform = harraRadio.isSelected() ?
-                WaveletService.getHaarTransform(signal.getData()) :
-                WaveletService.getDaubechiesTransform(signal.getData());
+                WaveletService.getHaarTransform(signal.getData(), scale) :
+                WaveletService.getDaubechiesTransform(signal.getData(), scale);
 
 
-        List<Double> result = WaveletService.filterMinMax(transform, Integer.parseInt(minTextBox.getText()), Integer.parseInt(maxTextBox.getText()));
+        List<Double> result = new ArrayList<>(transform);
+        if (filterCheckbox.isSelected()) {
+            result = WaveletService.filterMinMax(result, Integer.parseInt(minTextBox.getText()), Integer.parseInt(maxTextBox.getText()));
+        }
+        if (lowCheckbox.isSelected()) {
+            FilterService.lowD(result, selectedFile.getName().contains("wav") ? 44100 : 360, Integer.parseInt(minTextBox.getText()));
+        }
+
+        if (highCheckbox.isSelected()) {
+            FilterService.highD(result, selectedFile.getName().contains("wav") ? 44100 : 360, Integer.parseInt(minTextBox.getText()));
+        }
 
         result = harraRadio.isSelected() ?
-                WaveletService.getHaarInverseTransform(result) :
-                WaveletService.getDaubechiesInverseTransform(result);
+                WaveletService.getHaarInverseTransform(result, scale) :
+                WaveletService.getDaubechiesInverseTransform(result, scale);
 
         ChartUtil.setUp(transformChart, name, new SignalSimple(SignalBundle.myMap.get("gz"), transform), FREQ, selectedFile.getName().contains("wav") ? 100 : 0);
         ChartUtil.setUp(resultChart, name, new SignalSimple(SignalBundle.myMap.get("default"), result), FREQ, selectedFile.getName().contains("wav") ? 100 : 0);
